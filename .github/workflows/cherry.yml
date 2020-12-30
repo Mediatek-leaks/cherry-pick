@@ -43,8 +43,7 @@ jobs:
            ls
            cd base
            git fetch https://github.com/ProjectSakura/frameworks_base && git cherry-pick $C1 --signoff
-           expect -c "
-           spawn git push -f 
+           git push
            expect \"Username\"
            send \"${{ secrets.GHUSER }}\r\"
            expect \"Password\"
