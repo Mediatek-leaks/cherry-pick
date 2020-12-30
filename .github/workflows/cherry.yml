@@ -1,0 +1,51 @@
+name: setting up environment
+
+on: [push]
+    
+ env:
+  C1: 46af46c8093de438569181e67f62408c2ef2695c
+  C2:
+  C3:
+  C4:
+  C5:
+  C6:
+  C7:
+  C8:
+  C9:
+  C10:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+       - name: Checkout
+         uses: actions/checkout@main
+
+       - name: initialization
+         continue-on-error: true
+         run: |
+           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+           git config --global user.name "techyminati"
+           git config --global user.email "sinha.aryan03@gmail.com"         
+           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+           sudo -E apt-get clean 
+           sudo apt install expect -y
+           
+       - name: cloning repo
+         continue-on-error: true
+         run: |
+           git clone https://github.com/CipherOS/android_frameworks_base.git base
+           
+       - name: Pick
+         continue-on-error: true
+         run: |
+           ls
+           cd base
+           git fetch https://github.com/ProjectSakura/frameworks_base && git cherry-pick $C1 --signoff
+           expect -c "
+           spawn git push -f 
+           expect \"Username\"
+           send \"${{ secrets.GHUSER }}\r\"
+           expect \"Password\"
+           send \"${{ secrets.GHPASS }}\r\"
+           expect \"eleven -> eleven\"
