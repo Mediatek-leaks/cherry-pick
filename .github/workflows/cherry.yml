@@ -2,7 +2,7 @@ name: setting up environment
 
 on: [push]
     
- env:
+env:
   C1: 46af46c8093de438569181e67f62408c2ef2695c
   C2:
   C3:
@@ -13,6 +13,7 @@ on: [push]
   C8:
   C9:
   C10:
+  C11:
 jobs:
   build:
     runs-on: ubuntu-latest
